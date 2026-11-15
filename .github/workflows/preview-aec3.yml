@@ -529,7 +529,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.8'
-      - uses: android-actions/setup-android@v3
       - name: Install Android NDK 27.2 (arm64 cross-compiler)
         run: |
           yes | sdkmanager --licenses >/dev/null || true
