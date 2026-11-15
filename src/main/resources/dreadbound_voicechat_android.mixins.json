@@ -1,0 +1,8 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.dreadbound.voicechat.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": ["AndroidLibrariesMixin"],
+  "injectors": {"defaultRequire": 0}
+}
