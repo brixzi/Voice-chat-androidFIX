@@ -16,7 +16,9 @@ NATIVES = {
     'liblame4j.so': '6cfeb6c9f72212ad0b4442362a8d0a548b78399f',
     'libopus4j.so': '138b952cc19b734dadfbe24b8ac21f95910855d1',
     'librnnoise4j.so': 'b32b1d944bad1aa45bdc29c849a2361b1fb004aa',
-    'libspeex4j.so': 'f4cf9f4ab5cca6c05b2d02640ff7305accff2e5d',
+    
+'libspeex4j.so': 'f4cf9f4ab5cca6c05b2b02640ff7305accff2e5d',
+
 }
 TARGET = Path('src/main/resources/natives/android-aarch64')
 TARGET.mkdir(parents=True, exist_ok=True)
