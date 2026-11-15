@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'dev.dreadbound.voicechat'
+version = '0.1.0-experimental'
+base { archivesName = 'dreadbound-voicechat-android-forge' }
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+repositories {
+    maven { url = 'https://repo.spongepowered.org/maven' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.29'
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+}
+
+processResources {
+    inputs.property('mod_version', project.version)
+    filesMatching('META-INF/mods.toml') {
+        expand(mod_version: project.version)
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest.attributes([
+        'MixinConfigs': 'dreadbound_voicechat_android.mixins.json',
+        'Implementation-Title': 'Dreadbound VoiceChat Android Fix (experimental)',
+        'Implementation-Version': project.version
+    ])
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
