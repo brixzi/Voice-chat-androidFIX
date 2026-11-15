@@ -529,11 +529,24 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.8'
+      
       - name: Install Android NDK 27.2 (arm64 cross-compiler)
+        shell: bash
         run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager 'ndk;27.2.12479018' 'cmake;3.22.1'
-          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.2.12479018" >> "$GITHUB_ENV"
+          set -euo pipefail
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager -print -quit)"
+          if [[ -z "$SDKMANAGER" ]]; then
+            echo "::error::sdkmanager missing from $SDK_ROOT/cmdline-tools"
+            exit 1
+          fi
+          echo "Found SDK manager: $SDKMANAGER"
+          yes | "$SDKMANAGER" --sdk_root="$SDK_ROOT" --licenses >/dev/null || true
+          "$SDKMANAGER" --sdk_root="$SDK_ROOT" 'ndk;27.2.12479018' 'cmake;3.22.1'
+          test -f "$SDK_ROOT/ndk/27.2.12479018/build/cmake/android.toolchain.cmake"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_HOME=$SDK_ROOT/ndk/27.2.12479018" >> "$GITHUB_ENV"
       - name: Verify Simple Voice Chat 2.6.27 Forge bytecode
         run: python3 scripts/verify_voicechat_target.py
       - name: Verify and fetch original four Android JNI libraries
