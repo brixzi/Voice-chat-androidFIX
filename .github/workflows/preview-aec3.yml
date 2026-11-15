@@ -561,7 +561,7 @@ jobs:
           done
       - name: Fetch WebRTC M155 Android AEC3 (SHA256-pinned)
         run: python3 scripts/fetch_webrtc_apm.py
-- name: Compile WebRTC AEC3 JNI bridge for Android ARM64
+      - name: Compile WebRTC AEC3 JNI bridge for Android ARM64
         run: |
           set -euo pipefail
           sed -i 's/^target_include_directories(dreadbound_aec3 PRIVATE$/target_include_directories(dreadbound_aec3 SYSTEM PRIVATE/' native/aec3/CMakeLists.txt
