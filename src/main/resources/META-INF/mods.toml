@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="dreadbound_voicechat_android"
+version="${mod_version}"
+displayName="Dreadbound VoiceChat Android Fix (EXPERIMENTAL)"
+authors="Dreadbound experimental port; inspired by melon4ik666's VoiceChat Android Fix"
+description='''
+Replaces native audio libraries of Simple Voice Chat 2.6.x with Android ARM64 builds.
+Experimental client-only compatibility mod. Do not install on dedicated servers.
+'''
+displayTest="IGNORE_SERVER_VERSION"
+
+[[dependencies.dreadbound_voicechat_android]]
+modId="voicechat"
+mandatory=true
+versionRange="[0,)"
+ordering="AFTER"
+side="CLIENT"
